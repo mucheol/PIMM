@@ -22,6 +22,7 @@ function loadKakaoSdk(appkey) {
 onMounted(async () => {
   const appkey = import.meta.env.VITE_KAKAO_MAP_KEY;
   if (!appkey) {
+    console.error("[카카오맵] VITE_KAKAO_MAP_KEY가 설정되지 않았습니다. .env(로컬) 또는 배포 플랫폼의 환경변수를 확인하세요.");
     mapFailed.value = true;
     return;
   }
@@ -32,6 +33,7 @@ onMounted(async () => {
 
     geocoder.addressSearch(ADDRESS, (result, status) => {
       if (status !== kakao.maps.services.Status.OK) {
+        console.error(`[카카오맵] 주소 검색 실패 (status: ${status}). 주소 문자열 또는 카카오 콘솔의 도메인/서비스 활성화 상태를 확인하세요.`);
         mapFailed.value = true;
         return;
       }
@@ -44,7 +46,8 @@ onMounted(async () => {
       new kakao.maps.Marker({ position: center, map });
       mapReady.value = true;
     });
-  } catch {
+  } catch (err) {
+    console.error("[카카오맵] SDK 로드 실패. 카카오 개발자 콘솔에 현재 도메인이 정확히(프로토콜/포트 포함) 등록됐는지 확인하세요.", err);
     mapFailed.value = true;
   }
 });
