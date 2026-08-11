@@ -24,7 +24,7 @@
             <ul class="scheduleList">
               <li><span class="scheduleTime">10:30–11:30</span><span class="scheduleBadge isClass">크로스핏 수업</span></li>
               <li><span class="scheduleTime">11:30–18:30</span><span class="scheduleBadge isOpen">오픈짐 · 코치 애슬릿 트레이닝</span></li>
-              <li><span class="scheduleTime">18:30–19:30</span><span class="scheduleBadge isClass">크로스핏 수업</span></li>
+              <li style="margin-top:30px;"><span class="scheduleTime">18:30–19:30</span><span class="scheduleBadge isClass">크로스핏 수업</span></li>
               <li><span class="scheduleTime">19:30–20:00</span><span class="scheduleBadge isOpen">쉬는시간 &amp; 개인운동</span></li>
               <li><span class="scheduleTime">20:00–21:00</span><span class="scheduleBadge isClass">크로스핏 수업</span></li>
               <li><span class="scheduleTime">21:00–21:30</span><span class="scheduleBadge isOpen">쉬는시간 &amp; 개인운동</span></li>
@@ -41,7 +41,6 @@
           </div>
           <p class="scheduleHours">월–금·토 10:00 – 23:00 운영 &nbsp;|&nbsp; 일요일 휴무</p>
           <p class="scheduleCoach">담당 코치 : 이재준</p>
-          <a href="/schedule" class="idxHeroBtn isPrimary">시간표 자세히 보기</a>
         </div>
       </div>
     </div>

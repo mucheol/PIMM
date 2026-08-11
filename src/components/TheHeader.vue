@@ -45,7 +45,7 @@ onUnmounted(() => window.removeEventListener("scroll", updateScrolled));
         </li>
       </ul>
     </nav>
-    <a href="/apply" class="cl_headerCta">무료체험 신청</a>
+    <a href="/apply" class="cl_headerCta">무료체험 & 드랍인 신청</a>
     <button
       type="button"
       class="cl_gnbToggle"

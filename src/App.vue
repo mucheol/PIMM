@@ -1,5 +1,6 @@
 <script setup>
 import TheHeader from "./components/TheHeader.vue";
+import IntroLoader from "./components/IntroLoader.vue";
 import DogCursor from "./components/DogCursor.vue";
 import ScrollProgress from "./components/ScrollProgress.vue";
 import BackToTop from "./components/BackToTop.vue";
@@ -13,6 +14,7 @@ import TheFooter from "./components/TheFooter.vue";
 
 <template>
   <a href="#content" class="skipNav">본문 바로가기</a>
+  <IntroLoader />
   <ScrollProgress />
   <TheHeader />
   <DogCursor />

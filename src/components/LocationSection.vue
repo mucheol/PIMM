@@ -71,7 +71,6 @@ onMounted(async () => {
         <dd>월–금·토 10:00 – 23:00 &nbsp;|&nbsp; 일요일 휴무</dd>
         <dt>문의</dt>
         <dd>010-0000-0000</dd>
-        <a href="/location" class="idxHeroBtn isGhost" style="color:var(--ink); border-color:var(--accent-gold);">오시는길 자세히 보기</a>
       </dl>
     </div>
   </section>

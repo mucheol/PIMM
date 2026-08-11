@@ -4,6 +4,7 @@ export function useHorizontalPin(mobileBreakpoint = 768) {
   const sectionRef = ref(null);
   const trackRef = ref(null);
   const sectionHeight = ref("100vh");
+  const progress = ref(0);
 
   function isMobile() {
     return window.innerWidth <= mobileBreakpoint;
@@ -12,7 +13,7 @@ export function useHorizontalPin(mobileBreakpoint = 768) {
   function maxTranslate() {
     const track = trackRef.value;
     if (!track) return 0;
-    return Math.max(track.scrollWidth - window.innerWidth, 0);
+    return track.scrollWidth / 2;
   }
 
   function syncHeight() {
@@ -22,12 +23,14 @@ export function useHorizontalPin(mobileBreakpoint = 768) {
   function updateTrack() {
     const section = sectionRef.value;
     const track = trackRef.value;
-    if (!section || !track || isMobile()) return;
+    if (!section || !track || isMobile()) {
+      progress.value = isMobile() ? 1 : 0;
+      return;
+    }
 
     const rect = section.getBoundingClientRect();
     const scrollable = rect.height - window.innerHeight;
-    const progress = scrollable > 0 ? Math.min(Math.max(-rect.top / scrollable, 0), 1) : 0;
-    track.style.transform = `translateX(-${progress * maxTranslate()}px)`;
+    progress.value = scrollable > 0 ? Math.min(Math.max(-rect.top / scrollable, 0), 1) : 0;
   }
 
   function onScroll() {
@@ -54,5 +57,5 @@ export function useHorizontalPin(mobileBreakpoint = 768) {
     window.removeEventListener("resize", onResize);
   });
 
-  return { sectionRef, trackRef, sectionHeight, resync };
+  return { sectionRef, trackRef, sectionHeight, progress, resync };
 }
