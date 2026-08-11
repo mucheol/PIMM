@@ -1,0 +1,7 @@
+/* 대분류 */
+/*
+  ****************************** 폰트 정의 ******************************
+*/
+
+@font-face {font-family:NotoSansR; src:url("../fonts/NotoSansKR-Regular.woff2") format("woff2"); font-weight:400; font-display:swap;} /* TODO: 폰트 파일 미수령 — fonts 폴더에 실제 파일 필요 */
+@font-face {font-family:NotoSansB; src:url("../fonts/NotoSansKR-Bold.woff2") format("woff2"); font-weight:700; font-display:swap;} /* TODO: 폰트 파일 미수령 */

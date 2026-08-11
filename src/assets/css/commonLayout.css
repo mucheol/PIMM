@@ -1,0 +1,92 @@
+/* 대분류 */
+/*
+  ****************************** 공통 레이아웃 ******************************
+*/
+
+.pageOutWrap {position:relative; width:100%; min-height:100vh;}
+.contentWrap {width:100%; max-width:1400px; margin:0 auto; padding:0 20px;}
+.fullContentWrap {width:100%;}
+
+/* 서브페이지 전용 (index 제외) */
+.cl_subVisual {width:100%; height:320px; background:var(--bg-section);}
+.cl_breadcrumb {padding:16px 20px; font-size:12px; color:#888888;}
+.cl_pageTitle {padding:0 20px 40px; font-family:NotoSansB, sans-serif; font-size:32px; color:var(--ink);}
+
+/*
+  *** 헤더/nav
+*/
+
+.cl_header {position:fixed; top:0; left:0; z-index:1000; display:flex; align-items:center; justify-content:space-between; width:100%; height:80px; padding:0 40px; color:#ffffff; background:transparent; border-bottom:1px solid transparent; transition:background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, height 0.2s ease, color 0.25s ease;}
+.cl_header.isScrolled {height:64px; color:var(--ink); background:#ffffff; border-bottom-color:#eeeeee; box-shadow:0 4px 16px rgba(0,0,0,0.08);}
+.cl_header .cl_logo {display:flex; align-items:center; height:100%;}
+.cl_header .cl_logo img {height:56px; width:auto; filter:drop-shadow(0 2px 6px rgba(0,0,0,0.35)); transition:height 0.2s ease, filter 0.25s ease;}
+.cl_header.isScrolled .cl_logo img {height:44px; filter:none;}
+
+.cl_gnb {display:flex; align-items:center; height:100%;}
+.cl_gnb > ul {display:flex; align-items:center; height:100%;}
+.cl_gnb > ul > li {position:relative; height:100%;}
+.cl_gnb > ul > li > a {display:flex; align-items:center; height:100%; padding:0 22px; font-size:15px; font-weight:700; color:inherit; text-shadow:0 1px 4px rgba(0,0,0,0.35); transition:color 0.2s ease, text-shadow 0.25s ease;}
+.cl_header.isScrolled .cl_gnb > ul > li > a {text-shadow:none;}
+.cl_gnb > ul > li:hover > a, .cl_gnb > ul > li:focus-within > a {color:var(--color-primary);}
+
+.cl_gnb .cl_depth2 {position:absolute; top:100%; left:0; visibility:hidden; width:180px; padding:12px 0; opacity:0; background:#ffffff; border-top:2px solid var(--accent-orange); box-shadow:0 8px 20px rgba(0,0,0,0.08); transition:opacity 0.2s ease;}
+.cl_gnb > ul > li:hover .cl_depth2, .cl_gnb > ul > li:focus-within .cl_depth2 {visibility:visible; opacity:1;}
+.cl_gnb .cl_depth2 li a {display:block; padding:10px 20px; font-size:14px; color:#555555;}
+.cl_gnb .cl_depth2 li a:hover, .cl_gnb .cl_depth2 li a:focus {color:var(--color-primary); background:var(--bg-section);}
+
+.cl_headerCta {display:flex; align-items:center; height:44px; padding:0 22px; font-size:14px; font-weight:700; color:var(--ink); background:var(--accent-yellow); border-radius:999px;}
+.cl_headerCta:hover, .cl_headerCta:focus {background:var(--accent-orange); color:#ffffff;}
+
+.cl_gnbToggle {display:none; width:44px; height:44px; color:inherit; font-size:0; background:none;}
+
+/*
+  *** 강아지 커서 인터랙션
+*/
+
+body.hasDogCursor {cursor:none;}
+body.hasDogCursor a, body.hasDogCursor button {cursor:none;}
+.dogCursorLayer {position:fixed; top:0; left:0; z-index:9999; width:100%; height:100%; pointer-events:none;}
+.dogCursorBall {position:absolute; top:0; left:0; width:28px; height:28px; margin:-14px 0 0 -14px; border-radius:50%; background:radial-gradient(circle at 35% 30%, #ff9d7a 0%, var(--accent-orange) 45%, #a83a1e 100%); box-shadow:0 0 12px rgba(232,88,56,0.7), inset -3px -3px 6px rgba(0,0,0,0.3);}
+.dogCursorPup {position:absolute; top:0; left:0; width:192px; height:192px; margin:-96px 0 0 -96px;}
+.dogCursorPup img {display:block; width:100%; height:100%; object-fit:contain;}
+
+/*
+  *** 스크롤 진행바 / 맨 위로 버튼
+*/
+
+.scrollProgress {position:fixed; top:0; left:0; z-index:1100; height:3px; background:linear-gradient(90deg, var(--color-primary), var(--accent-sky)); transition:width 0.1s linear;}
+
+.backToTop {position:fixed; right:24px; bottom:24px; z-index:900; display:flex; align-items:center; justify-content:center; width:48px; height:48px; color:#ffffff; font-size:20px; background:var(--color-primary-deep); border-radius:50%; box-shadow:0 4px 12px rgba(0,0,0,0.18); opacity:0; visibility:hidden; transform:translateY(12px); transition:opacity 0.2s ease, transform 0.2s ease, background 0.2s ease;}
+.backToTop.isVisible {opacity:1; visibility:visible; transform:translateY(0);}
+.backToTop:hover, .backToTop:focus {background:var(--accent-orange);}
+
+/*
+  *** 스크롤 인뷰 등장 애니메이션
+*/
+
+.reveal {opacity:0; transform:translateY(28px); transition:opacity 0.6s ease, transform 0.6s ease;}
+.reveal.isRevealed {opacity:1; transform:none;}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {opacity:1; transform:none; transition:none;}
+  .idxHeroScroll {animation:none;}
+}
+
+@media (max-width:1200px) {
+  .cl_header {padding:0 24px;}
+}
+
+@media (max-width:768px) {
+  .cl_header {height:60px; padding:0 16px;}
+  .cl_header .cl_logo img {height:40px;}
+  .cl_headerCta {display:none;}
+  .cl_gnbToggle {display:block;}
+  .cl_gnb {position:fixed; top:60px; left:0; flex-direction:column; align-items:stretch; width:100%; height:calc(100vh - 60px); padding:20px 0; visibility:hidden; opacity:0; background:#ffffff; transition:opacity 0.2s ease;}
+  .cl_gnb.isOpen {visibility:visible; opacity:1;}
+  .cl_gnb > ul {flex-direction:column; align-items:stretch; height:auto;}
+  .cl_gnb > ul > li {height:auto;}
+  .cl_gnb > ul > li > a {height:auto; padding:14px 24px;}
+  .cl_gnb .cl_depth2 {position:static; visibility:visible; opacity:1; width:100%; padding:0 0 8px; background:none; border-top:0;}
+  .cl_gnb .cl_depth2 li a {padding:8px 40px; font-size:13px;}
+  .dogCursorLayer {display:none;} /* 모바일은 터치라 커서 연출 미대응 */
+}

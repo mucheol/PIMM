@@ -1,0 +1,142 @@
+/* 대분류 */
+/*
+  ****************************** 메인(index) ******************************
+*/
+
+/*
+  *** 히어로
+*/
+
+.idxHero {position:relative; display:flex; flex-direction:column; align-items:center; justify-content:center; width:100%; height:100vh; min-height:640px; padding:80px 20px 0; text-align:center; color:#ffffff; background:var(--ink); overflow:hidden;}
+.idxHeroVideo {position:absolute; top:50%; left:50%; z-index:0; width:100%; height:100%; min-width:100%; min-height:100%; object-fit:cover; transform:translate(-50%, -50%);}
+.idxHeroScrim {position:absolute; inset:0; z-index:0; background:linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.35) 50%, rgba(0,0,0,0.65) 100%);}
+.idxHero .idxHeroInner {position:relative; z-index:1; max-width:900px;}
+.idxHero .idxHeroEyebrow {display:inline-block; margin-bottom:20px; padding:6px 16px; font-size:18px; font-weight:700; letter-spacing:2px; color:var(--ink); background:var(--accent-yellow); border-radius:999px;}
+.idxHero h1 {display:inline-block; margin-bottom:20px; padding:18px 44px; font-family:NotoSansB, sans-serif; font-size:64px; line-height:1.15; letter-spacing:-1px; color:#ffffff;}
+.idxHero h1 span {color:#38B078}
+.idxHero p {margin-bottom:36px; font-size:18px; color:#dddddd;}
+.idxHero .idxHeroBtns {display:flex; align-items:center; justify-content:center; gap:16px;}
+.idxHeroBtn {display:inline-flex; align-items:center; justify-content:center; height:56px; padding:0 32px; font-size:16px; font-weight:700; border-radius:999px; transition:transform 0.2s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;}
+.idxHeroBtn:hover, .idxHeroBtn:focus {transform:translateY(-3px) scale(1.03);}
+.idxHeroBtn.isPrimary {color:var(--ink); background:var(--accent-orange);}
+.idxHeroBtn.isPrimary:hover, .idxHeroBtn.isPrimary:focus {background:var(--accent-yellow);}
+.idxHeroBtn.isGhost {color:#ffffff; border:1px solid rgba(255,255,255,0.5);}
+.idxHeroBtn.isGhost:hover, .idxHeroBtn.isGhost:focus {color:var(--ink); background:var(--accent-gold); border-color:var(--accent-gold);}
+.idxHeroScroll {position:absolute; bottom:32px; left:50%; z-index:1; margin-left:-1px; width:2px; height:60px; background:linear-gradient(180deg, rgba(255,255,255,0.6), transparent); animation:heroScrollBounce 1.8s ease-in-out infinite;}
+
+@keyframes heroScrollBounce {
+  0%, 100% {transform:translateY(0); opacity:0.6;}
+  50% {transform:translateY(10px); opacity:1;}
+}
+
+/*
+  *** 공통 섹션 타이틀
+*/
+
+.idxSecTit {margin-bottom:44px; text-align:center;}
+.idxSecTit .idxSecEyebrow {display:block; margin-bottom:10px; font-size:13px; font-weight:700; letter-spacing:2px; color:var(--accent-orange);}
+.idxSecTit h2 {font-family:NotoSansB, sans-serif; font-size:36px; color:var(--ink);}
+.idxSecTit p {margin-top:12px; font-size:15px; color:#777777;}
+.dogCursorPup:nth-child(3) img {transform:scale(0.8);}
+
+/*
+  *** WOD/운동기록 섹션
+*/
+
+.idxWod {padding:120px 0; background:var(--bg-section);}
+.idxWodGrid {display:grid; grid-template-columns:1.1fr 0.9fr; gap:32px;}
+.idxWodCard {padding:40px; color:var(--ink); background:#ffffff; border:1px solid var(--accent-gold); border-radius:20px; transition:transform 0.25s ease, box-shadow 0.25s ease;}
+.idxWodCard:hover {transform:translateY(-6px); box-shadow:0 16px 32px rgba(0,0,0,0.08);}
+.idxWodCard .idxWodDate {margin-bottom:16px; font-size:14px; color:var(--accent-orange);}
+.idxWodCard h3 {margin-bottom:20px; font-family:NotoSansB, sans-serif; font-size:24px;}
+.idxWodCard ul {display:flex; flex-direction:column; gap:12px; margin-bottom:28px;}
+.idxWodCard li {padding-bottom:12px; font-size:15px; border-bottom:1px solid rgba(0,0,0,0.08);}
+.idxWodLogCard {display:flex; flex-direction:column; padding:40px; background:#ffffff; border:1px solid var(--accent-gold); border-radius:20px; transition:transform 0.25s ease, box-shadow 0.25s ease;}
+.idxWodLogCard:hover {transform:translateY(-6px); box-shadow:0 16px 32px rgba(0,0,0,0.08);}
+.idxWodLogCard h3 {margin-bottom:12px; font-family:NotoSansB, sans-serif; font-size:22px; color:var(--ink);}
+.idxWodLogCard p {margin-bottom:24px; font-size:14px; color:#777777;}
+
+.scheduleGroup {margin-bottom:20px;}
+.scheduleGroup h4 {margin-bottom:10px; font-family:NotoSansB, sans-serif; font-size:14px; color:var(--color-primary-deep);}
+.scheduleList {display:flex; flex-direction:column; gap:8px;}
+.scheduleList li {display:flex; align-items:center; gap:12px;}
+.scheduleTime {flex:0 0 108px; font-size:13px; font-weight:700; color:#777777;}
+.scheduleBadge {flex:1; padding:8px 14px; font-size:13px; font-weight:700; text-align:center; border-radius:999px; transition:transform 0.15s ease;}
+.scheduleBadge:hover {transform:scale(1.03);}
+.scheduleBadge.isClass {color:#ffffff; background:var(--ink);}
+.scheduleBadge.isOpen {color:var(--ink); background:#ffffff; border:1px solid var(--accent-gold);}
+.idxWodLogCard .scheduleHours {margin-top:4px; margin-bottom:4px; font-size:13px; color:var(--color-primary-deep); font-weight:700;}
+.idxWodLogCard .scheduleCoach {margin-bottom:20px; font-size:13px; color:#777777;}
+.idxScheduleCard .idxHeroBtn {align-self:flex-start;}
+
+/*
+  *** 핌 운동사진 갤러리
+*/
+
+.idxGallery {position:relative; background:var(--bg-section);}
+.idxGallerySticky {position:sticky; top:0; display:flex; flex-direction:column; justify-content:center; gap:36px; height:100vh; overflow:hidden;}
+.idxGalleryTrack {display:flex; gap:20px; padding:0 20px; width:max-content; will-change:transform;}
+.idxGallerySlide {position:relative; flex:0 0 auto; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px; width:max(260px, 30vw); height:380px; margin:0; padding:24px; color:#999999; text-align:center; background:#ffffff; border:1px dashed var(--accent-gold); border-radius:16px; transition:transform 0.25s ease, box-shadow 0.25s ease;}
+.idxGallerySlide:hover {transform:translateY(-8px); box-shadow:0 18px 36px rgba(0,0,0,0.1);}
+.idxGalleryIcon {font-size:40px; color:var(--accent-gold);}
+.idxGallerySlide figcaption {font-size:13px;}
+.idxGallerySlide.isPhoto {padding:0; border:1px solid var(--accent-gold); overflow:hidden;}
+.idxGallerySlide.isPhoto img {width:100%; height:100%; object-fit:cover;}
+
+/*
+  *** 오시는길
+*/
+
+.idxLocation {padding:120px 0;}
+.idxLocationGrid {display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:center;}
+.idxLocationMap {position:relative; width:100%; height:380px; background:var(--bg-section); border:1px solid var(--accent-gold); border-radius:16px; overflow:hidden;}
+.idxLocationMapFallback {position:absolute; inset:0; background-color:var(--bg-section); background-size:cover; background-position:center; background-attachment:fixed;}
+.idxLocationInfo dt {margin-bottom:4px; font-size:13px; color:var(--accent-orange);}
+.idxLocationInfo dd {margin-bottom:24px; font-size:16px; color:var(--ink);}
+
+/*
+  *** 무료체험/드랍인 CTA 배너
+*/
+
+.idxCta {display:flex; flex-direction:column; align-items:center; justify-content:center; padding:100px 20px; text-align:center; color:var(--ink); background:#ffffff; border-top:4px solid var(--accent-yellow); border-bottom:4px solid var(--accent-yellow);}
+.idxCta h2 {margin-bottom:16px; font-family:NotoSansB, sans-serif; font-size:32px;}
+.idxCta p {margin-bottom:20px; font-size:15px; color:#777777;}
+.idxCtaNotes {display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:10px; margin-bottom:32px;}
+.idxCtaNotes li {padding:8px 16px; font-size:13px; font-weight:700; color:var(--ink); background:var(--bg-section); border-radius:999px;}
+.idxCta .idxHeroBtn.isPrimary {color:#ffffff; background:var(--color-primary);}
+.idxCta .idxHeroBtn.isPrimary:hover, .idxCta .idxHeroBtn.isPrimary:focus {background:var(--accent-orange);}
+
+/*
+  *** 푸터
+*/
+
+.cl_footer {padding:60px 0 40px; color:#777777; background:#ffffff; border-top:1px solid #eeeeee;}
+.cl_footer .cl_footerTop {display:flex; justify-content:space-between; margin-bottom:32px; padding-bottom:32px; border-bottom:1px solid rgba(0,0,0,0.08);}
+.cl_footer .cl_logo {font-family:NotoSansB, sans-serif; font-size:20px; color:var(--color-primary-deep);}
+.cl_footer address {font-size:13px; line-height:1.8; font-style:normal;}
+.cl_footer .cl_copyright {font-size:12px;}
+
+@media (max-width:1200px) {
+  .idxHero h1 {padding:16px 32px; font-size:48px;}
+  .idxWodGrid {grid-template-columns:1fr;}
+  .idxLocationGrid {grid-template-columns:1fr;}
+}
+
+@media (max-width:768px) {
+  .idxHero {height:auto; min-height:560px; padding:100px 16px 60px;}
+  .idxHero h1 {padding:12px 20px; font-size:32px; border-radius:18px;}
+  .idxHero p {font-size:14px;}
+  .idxHero .idxHeroBtns {flex-direction:column; width:100%;}
+  .idxHeroBtn {width:100%; height:52px;}
+  .idxWod, .idxLocation {padding:60px 0;}
+  .idxSecTit h2 {font-size:24px;}
+  .idxWodCard, .idxWodLogCard {padding:24px;}
+  .idxLocationMap {height:240px;}
+  .idxLocationMapFallback {background-attachment:scroll;}
+  .cl_footer .cl_footerTop {flex-direction:column; gap:20px;}
+
+  .idxGallery {height:auto;}
+  .idxGallerySticky {position:relative; top:auto; height:auto; padding:60px 0; overflow:visible;}
+  .idxGalleryTrack {flex-wrap:wrap; width:auto; padding:0; transform:none !important;}
+  .idxGallerySlide {width:calc(50% - 10px); height:200px;}
+}
