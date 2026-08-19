@@ -1,12 +1,12 @@
 <template>
   <section class="idxCta">
-    <h2>지금, 크로스핏 핌에서 시작하세요</h2>
-    <p>무료체험과 드랍인, 언제든 편하게 신청하세요.</p>
+    <h2>한계를 넘는 순간,<br>변화가 시작됩니다</h2>
+    <p>처음이어도 괜찮습니다. 오늘 한 번, 직접 움직여보세요.</p>
     <ul class="idxCtaNotes">
-      <li>무료체험 : 1인 1회 (초보자 한정)</li>
-      <li>드랍인 1회 : 2만원</li>
-      <li>개인락카 비용 : 1만원 (회원권 기간과 동일하게 등록)</li>
+      <li>첫 방문 무료 체험</li>
+      <li>드랍인 1회 20,000원</li>
+      <li>개인 락커 10,000원</li>
     </ul>
-    <a href="/apply" class="idxHeroBtn isPrimary">무료체험 &amp; 드랍인 신청</a>
+    <a href="/apply" class="idxHeroBtn isPrimary">첫 운동 시작하기</a>
   </section>
 </template>

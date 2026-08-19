@@ -24,7 +24,7 @@ import TheFooter from "./components/TheFooter.vue";
       <WodSection />
       <GallerySection />
       <LocationSection v-reveal />
-      <CtaSection v-reveal />
+      <CtaSection />
     </main>
   </div>
   <TheFooter />

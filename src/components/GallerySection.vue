@@ -11,6 +11,8 @@ const galleryItems = computed(() => photos.value.length
   ? photos.value
   : Array.from({ length: placeholderCount }, (_, i) => ({ id: `placeholder-${i}`, placeholder: true }))
 );
+const gallerySpeed = computed(() => `${48 - progress.value * 30}s`);
+const galleryReverseSpeed = computed(() => `${54 - progress.value * 34}s`);
 
 function setTrackRef(el) {
   if (el) trackRef.value = el;
@@ -31,7 +33,7 @@ watch(photos, async () => {
       </div>
       <div class="idxGalleryRows">
         <div v-for="row in 2" :key="row" class="idxGalleryRow">
-          <div class="idxGalleryTrack" :class="{ isReverse: row === 2 }" :ref="row === 1 ? setTrackRef : undefined">
+          <div class="idxGalleryTrack" :class="{ isReverse: row === 2 }" :style="{ animationDuration: row === 2 ? galleryReverseSpeed : gallerySpeed }" :ref="row === 1 ? setTrackRef : undefined">
             <template v-for="loop in 2" :key="loop">
               <template v-for="item in galleryItems" :key="`${row}-${loop}-${item.id}`">
                 <a v-if="!item.placeholder" :href="item.permalink" target="_blank" rel="noopener noreferrer" class="idxGallerySlide isPhoto">

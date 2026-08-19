@@ -77,7 +77,7 @@ body.hasDogCursor a, body.hasDogCursor button {cursor:none;}
   *** 스크롤 진행바 / 맨 위로 버튼
 */
 
-.scrollProgress {position:fixed; top:0; left:0; z-index:1100; height:3px; background:linear-gradient(90deg, var(--color-primary), var(--accent-sky)); transition:width 0.1s linear;}
+.scrollProgress {position:fixed; top:0; left:0; z-index:1100; height:4px; background:linear-gradient(90deg, var(--accent-orange), var(--accent-yellow), var(--color-primary), var(--accent-sky)); box-shadow:0 0 14px var(--accent-yellow); transition:width 0.1s linear;}
 
 .backToTop {position:fixed; right:24px; bottom:24px; z-index:900; display:flex; align-items:center; justify-content:center; width:48px; height:48px; color:#ffffff; font-size:20px; background:var(--color-primary-deep); border-radius:50%; box-shadow:0 4px 12px rgba(0,0,0,0.18); opacity:0; visibility:hidden; transform:translateY(12px); transition:opacity 0.2s ease, transform 0.2s ease, background 0.2s ease;}
 .backToTop.isVisible {opacity:1; visibility:visible; transform:translateY(0);}
@@ -90,6 +90,9 @@ body.hasDogCursor a, body.hasDogCursor button {cursor:none;}
 .reveal {opacity:0; filter:blur(8px); clip-path:inset(0 0 22% 0); transform:translateY(60px) scale(0.96); transition:opacity 0.9s ease, filter 0.9s ease, clip-path 0.9s ease, transform 0.9s cubic-bezier(0.16,1,0.3,1);}
 .reveal.isRevealed {opacity:1; transform:none;}
 .reveal.isRevealed {filter:none; clip-path:inset(0);}
+.idxWodGrid > .reveal:nth-child(odd) {transform:translate(-70px, 45px) rotate(-2deg);}
+.idxWodGrid > .reveal:nth-child(even) {transform:translate(70px, 45px) rotate(2deg);}
+.idxWodGrid > .reveal.isRevealed {transform:none;}
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {scroll-behavior:auto !important; animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
