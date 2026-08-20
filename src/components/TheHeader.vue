@@ -16,7 +16,7 @@ onUnmounted(() => window.removeEventListener("scroll", updateScrolled));
 
 <template>
   <header class="cl_header" :class="{ isScrolled }">
-    <a href="/" class="cl_logo"><img src="/images/logo.png" alt="크로스핏 핌"></a>
+    <a href="/" class="cl_logo"><img src="/images/logo.png" alt="크로스핏 핌"><span class="cl_logoLabel">CROSSFIT</span></a>
     <nav class="cl_gnb" :class="{ isOpen }" role="navigation" aria-label="주메뉴">
       <ul>
         <li>
@@ -43,9 +43,10 @@ onUnmounted(() => window.removeEventListener("scroll", updateScrolled));
             <li><a href="/notice">공지사항</a></li>
           </ul>
         </li>
+        <span class="cl_headerDivider" aria-hidden="true"></span>
+        <a href="/apply" class="cl_headerCta">무료체험 & 드랍인 신청</a>
       </ul>
     </nav>
-    <a href="/apply" class="cl_headerCta">무료체험 & 드랍인 신청</a>
     <button
       type="button"
       class="cl_gnbToggle"
