@@ -5,6 +5,3 @@ dist
 
 .vercel
 .claude
-
-# 개발 도구가 실수로 저장하는 스크린샷 캡처 방지
-public/images/gallery/exec-*.png
