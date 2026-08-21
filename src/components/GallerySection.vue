@@ -40,8 +40,13 @@ const DRIFT_LETTERS = ["A", "B", "C", "D"];
 // 좁게 쏠려 보인다. 17은 BASE_COUNT와 서로소라 모든 슬롯을 한 번씩
 // 거치게 된다.
 const SHUFFLE_STEP = 17;
-const RADIUS_MIN = 380;
-const RADIUS_MAX = 1950;
+// 모바일은 화면이 좁아서 PC와 같은 반지름/카드 크기를 쓰면 사진이 화면
+// 밖으로 너무 멀리 퍼지고 커 보인다 — 화면 폭 기준으로 한 번만 판단해서
+// 반지름과 카드 크기를 함께 줄이고 중앙으로 모은다.
+const IS_MOBILE = typeof window !== "undefined" && window.innerWidth <= 768;
+const RADIUS_MIN = IS_MOBILE ? 70 : 380;
+const RADIUS_MAX = IS_MOBILE ? 280 : 1950;
+const CARD_SIZE_SCALE = IS_MOBILE ? 0.32 : 1;
 
 // 각 기본 카드마다 같은 깊이에서(그래서 같이 나타났다 사라짐) 터널
 // 반대편(각도+180°)에 미러 짝을 하나 더 만든다. 화면엔 한쪽만 보이지만
@@ -55,7 +60,7 @@ for (let i = 0; i < BASE_COUNT; i++) {
   const shuffled = (i * SHUFFLE_STEP) % BASE_COUNT;
   const angle = shuffled * GOLDEN_ANGLE;
   const radius = RADIUS_MIN + ((shuffled * 131) % (RADIUS_MAX - RADIUS_MIN));
-  const size = 240 + ((i * 53) % 130);
+  const size = (240 + ((i * 53) % 130)) * CARD_SIZE_SCALE;
   const ratio = 0.6 + ((i * 31) % 45) / 100;
   const common = {
     w: Math.round(size),

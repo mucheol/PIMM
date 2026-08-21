@@ -333,6 +333,10 @@ function onTouchStart(event) {
   touchStartY = event.touches[0].clientY;
 }
 function onTouchMove(event) {
+  // 모바일은 WOD 섹션이 길어서 터치 스크롤 가로채기(자동 진행/맨 위로 점프)가
+  // 오히려 스크롤을 방해함 — 터치 입력에서는 이 기능 자체를 끄고 순수 네이티브
+  // 스크롤만 사용한다. 데스크톱 휠 입력(onWheel)에는 영향 없음.
+  if (window.innerWidth <= 768) return;
   if (autoScrolling || performance.now() < settleUntil) {
     event.preventDefault();
     return;
