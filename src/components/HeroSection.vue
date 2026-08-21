@@ -306,6 +306,7 @@ function tryAutoAdvance(deltaY) {
     return true;
   }
   if (deltaY < 0) {
+    if (window.innerWidth <= 768) return false; // 모바일은 WOD 섹션이 길어서 한 번에 맨 위로 튀면 오히려 불편함 — 일반 스크롤 유지
     if (window.scrollY <= 2) return false; // 이미 맨 위
     if (window.scrollY > wodBottomY()) return false; // WOD 범위를 벗어남 — 일반 스크롤 유지
     runAutoScroll(0);
