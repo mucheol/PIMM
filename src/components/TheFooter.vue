@@ -1,4 +1,5 @@
 <script setup>
+// 사이트 푸터: 저작권 연도는 하드코딩하지 않고 현재 연도를 계산해 표시한다.
 const year = new Date().getFullYear();
 </script>
 

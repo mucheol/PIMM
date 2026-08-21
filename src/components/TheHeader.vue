@@ -1,4 +1,6 @@
 <script setup>
+// 사이트 상단 헤더: 모바일 메뉴(GNB) 토글과, 스크롤 시 헤더 배경을
+// 바꾸기 위한 스크롤 감지 상태를 관리한다.
 import { ref, onMounted, onUnmounted } from "vue";
 
 const isOpen = ref(false);
@@ -47,6 +49,7 @@ onUnmounted(() => window.removeEventListener("scroll", updateScrolled));
         <a href="/apply" class="cl_headerCta">무료체험 & 드랍인 신청</a>
       </ul>
     </nav>
+    <!-- 모바일 GNB 토글 버튼: aria-expanded로 스크린리더에 열림/닫힘 상태 전달 -->
     <button
       type="button"
       class="cl_gnbToggle"

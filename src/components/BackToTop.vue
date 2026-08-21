@@ -1,4 +1,6 @@
 <script setup>
+// 맨 위로 이동 버튼: 400px 이상 스크롤했을 때만 노출되고, 클릭 시
+// 부드럽게 페이지 최상단으로 이동한다.
 import { ref, onMounted, onUnmounted } from "vue";
 
 const isVisible = ref(false);

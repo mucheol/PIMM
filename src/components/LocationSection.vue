@@ -1,10 +1,14 @@
 <script setup>
+// 카카오맵 SDK를 동적으로 로드해 매장 위치를 지도에 표시하는 섹션.
+// API 키가 없거나 지오코딩/SDK 로드가 실패하면 mapFailed로 전환해
+// 정적 안내 이미지로 대체한다(아래 template 참고).
 import { ref, onMounted } from "vue";
 
 const ADDRESS = "서울시 은평구 진흥로 21";
 const mapReady = ref(false);
 const mapFailed = ref(false);
 
+// 이미 로드된 SDK가 있으면 재사용하고, 없으면 스크립트 태그를 삽입해 로드한다
 function loadKakaoSdk(appkey) {
   return new Promise((resolve, reject) => {
     if (window.kakao && window.kakao.maps) {
@@ -31,6 +35,7 @@ onMounted(async () => {
     const kakao = await loadKakaoSdk(appkey);
     const geocoder = new kakao.maps.services.Geocoder();
 
+    // 주소 문자열을 좌표로 변환(지오코딩)한 뒤 그 좌표를 중심으로 지도를 생성한다
     geocoder.addressSearch(ADDRESS, (result, status) => {
       if (status !== kakao.maps.services.Status.OK) {
         console.error(`[카카오맵] 주소 검색 실패 (status: ${status}). 주소 문자열 또는 카카오 콘솔의 도메인/서비스 활성화 상태를 확인하세요.`);

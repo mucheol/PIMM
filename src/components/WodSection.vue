@@ -1,3 +1,6 @@
+<!-- 오늘의 WOD 미리보기 + 크로스핏 핌 수업 시간표 섹션.
+     v-reveal: 스크롤 진입 시 등장 애니메이션, v-tilt: 마우스 위치에 따른 카드 3D 기울임(directives 참고).
+     WOD 상세 내용은 실제 데이터 연동 전이라 TODO 플레이스홀더로 표시 중. -->
 <template>
   <section class="idxWod">
     <div class="contentWrap">

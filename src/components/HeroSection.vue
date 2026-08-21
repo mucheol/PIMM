@@ -1,4 +1,9 @@
 <script setup>
+// 히어로(첫 화면) 섹션: 배경 영상 위에 클릭/터치 시 물결처럼 굴절되는 캔버스
+// 이펙트를 그리고, 스크롤에 맞춰 타이틀 문구가 흩어지듯 사라지며 "PIMM" 글자가
+// 쾅 하고 임팩트를 주며 등장하는 핀(pinned) 스크롤 연출을 담당한다.
+// 스크롤 한 번만 입력해도 남은 핀 구간을 자동으로 끝까지 진행시켜(관성 스크롤 흡수 포함)
+// WOD 섹션으로 자연스럽게 넘어가게 만든다.
 import { onMounted, onUnmounted, ref, computed } from "vue";
 
 const wrapRef = ref(null);
@@ -10,6 +15,8 @@ let context;
 let animationFrame;
 let lastImpact = 0;
 
+// 캔버스 해상도를 실제 표시 크기 × devicePixelRatio로 맞춰 고DPI 화면에서도
+// 흐릿하지 않게 하고, setTransform으로 좌표계를 CSS px 기준으로 되돌린다
 function resizeCanvas() {
   const canvas = impactCanvas.value;
   const hero = heroRef.value;
@@ -23,6 +30,8 @@ function resizeCanvas() {
   context.setTransform(ratio, 0, 0, ratio, 0, 0);
 }
 
+// 클릭/포인터 이동 지점에 물결(wave) 파동 하나를 추가한다. 75ms 쓰로틀로
+// 과도하게 자주 생성되는 것을 막고, 최대 8개까지만 유지해 오래된 파동은 제거한다.
 function addImpact(event) {
   const now = performance.now();
   if (now - lastImpact < 75) return;
@@ -49,12 +58,15 @@ function blobPath(ctx, cx, cy, radius, seed, reverse) {
   ctx.closePath();
 }
 
+// 매 프레임 실행: 살아있는 각 파동을 동심원 굴절 밴드로 그리고, 수명이 다한
+// 파동은 배열에서 제거한다.
 function draw(now) {
   const canvas = impactCanvas.value;
   const video = videoRef.value;
   if (!context || !canvas || !video) return;
   context.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
 
+  // 영상을 캔버스에 cover 방식으로 맞추기 위한 배율과 오프셋 계산
   const scale = video.videoWidth && video.videoHeight ? Math.max(canvas.clientWidth / video.videoWidth, canvas.clientHeight / video.videoHeight) : 0;
   const videoWidth = video.videoWidth * scale;
   const videoHeight = video.videoHeight * scale;
@@ -106,6 +118,8 @@ const mode = ref("top"); // top | fixed | bottom
 function clamp(v, a, b) {
   return Math.min(Math.max(v, a), b);
 }
+// 전체 progress(0~1) 중 [a, b] 구간만 뽑아 다시 0~1로 정규화 — 각 요소가
+// 스크롤 전체가 아니라 자기 담당 구간에서만 움직이게 하기 위한 헬퍼
 function seg(p, a, b) {
   return clamp((p - a) / (b - a), 0, 1);
 }
@@ -113,6 +127,7 @@ function outExpo(t) {
   return t >= 1 ? 1 : 1 - Math.pow(2, -10 * t);
 }
 
+// 문구가 화면 밖으로 날아가며 흐려지는 공통 연출(eyebrow/top/bottom/motto/lead에 재사용)
 function fly(p, a, b, dx, dy, rot) {
   const t = seg(p, a, b);
   const e = t * t;
@@ -123,6 +138,8 @@ function fly(p, a, b, dx, dy, rot) {
   };
 }
 
+// "PIMM" 개별 글자가 튕기듯 확대되며 나타나는 슬램 임팩트 연출.
+// dir(+1/-1)로 글자마다 좌우 반대 방향으로 살짝 튕기게 해 통통 튀는 느낌을 준다.
 function letter(p, start, dur, dir) {
   const t = seg(p, start, start + dur);
   const e = outExpo(t);
@@ -135,6 +152,7 @@ function letter(p, start, dur, dir) {
   };
 }
 
+// 임팩트 시점에 퍼져나가는 충격파 링(원형 확대+페이드) 연출
 function ring(p, mult, delay) {
   const t = seg(p, SLAM_START + 0.12 + delay, SLAM_START + 0.42 + delay);
   return {
@@ -176,6 +194,9 @@ const vals = computed(() => {
   };
 });
 
+// 핀(pinned) 스크롤 구현: 래퍼가 스크롤되는 동안엔 히어로를 fixed로 화면에
+// 고정해두고, 래퍼 시작 전(top)/끝난 후(bottom)에는 각각 정상 문서 흐름 위치로
+// 되돌려 핀 구간 앞뒤에서 자연스럽게 이어지게 한다.
 const stageStyle = computed(() => ({
   position: mode.value === "fixed" ? "fixed" : "absolute",
   top: mode.value === "bottom" ? "auto" : "0px",
@@ -185,6 +206,8 @@ const stageStyle = computed(() => ({
 const pimmLettersStyle = computed(() => ({ transform: `skewX(-5deg) scale(${vals.value.pimmSettle.toFixed(4)})` }));
 
 let scrollFrame;
+// 스크롤/리사이즈마다 progress(0~1)와 현재 모드(top/fixed/bottom)를 갱신.
+// rAF로 감싸서 스크롤 이벤트가 짧은 시간에 여러 번 발생해도 프레임당 한 번만 계산한다.
 function updateScroll() {
   const el = wrapRef.value;
   if (!el) {
@@ -207,8 +230,20 @@ function onScroll() {
 const AUTO_SCROLL_SPEED = 2.2; // px/ms
 let autoScrolling = false;
 let autoScrollFrame;
+let autoScrollDirection = 0; // 1 = 아래로 진행 중, -1 = 위로 진행 중 (역방향 휠 입력 시 취소 판단용)
 let touchStartY = 0;
 
+// WOD 섹션 하단 문서 Y좌표. 이 지점을 지나 갤러리 등으로 더 내려간 상태에서는
+// 위로 스크롤해도 맨 위로 점프시키지 않고 자연스러운 스크롤을 그대로 둔다.
+function wodBottomY() {
+  const wod = document.querySelector(".idxWod");
+  if (!wod) return Infinity;
+  const rect = wod.getBoundingClientRect();
+  return rect.bottom + window.scrollY;
+}
+
+// 자동 스크롤이 향해야 할 목표 지점(WOD 섹션이 화면을 완전히 덮는 문서 Y좌표)과
+// 거기까지 남은 거리를 계산한다
 function pinMetrics() {
   const el = wrapRef.value;
   if (!el) return null;
@@ -228,10 +263,12 @@ function pinMetrics() {
 const SETTLE_MS = 400;
 let settleUntil = 0;
 
+// 현재 위치에서 targetY까지 일정 속도(AUTO_SCROLL_SPEED)로 부드럽게 자동 스크롤한다
 function runAutoScroll(targetY) {
   autoScrolling = true;
   const startY = window.scrollY;
   const distance = targetY - startY;
+  autoScrollDirection = distance >= 0 ? 1 : -1;
   const duration = Math.max(Math.abs(distance) / AUTO_SCROLL_SPEED, 1);
   const startTime = performance.now();
   function step(now) {
@@ -256,20 +293,32 @@ function cancelAutoScroll() {
   autoScrollFrame = null;
 }
 
+// 아래로 스크롤하면 남은 핀 구간을 끝까지, 위로 스크롤하면(WOD 섹션 범위 안에 있을 때만)
+// 맨 위(히어로 첫 화면)까지 자동으로 진행한다. 이미 자동 스크롤 중이거나 방금 끝나
+// SETTLE_MS 이내(관성 이벤트 흡수 구간)면 무시.
 function tryAutoAdvance(deltaY) {
   if (autoScrolling) return true;
   if (performance.now() < settleUntil) return true;
-  if (deltaY <= 0) return false;
-  const metrics = pinMetrics();
-  if (!metrics || metrics.remaining <= 2) return false;
-  runAutoScroll(metrics.wodCoverY);
-  return true;
+  if (deltaY > 0) {
+    const metrics = pinMetrics();
+    if (!metrics || metrics.remaining <= 2) return false;
+    runAutoScroll(metrics.wodCoverY);
+    return true;
+  }
+  if (deltaY < 0) {
+    if (window.scrollY <= 2) return false; // 이미 맨 위
+    if (window.scrollY > wodBottomY()) return false; // WOD 범위를 벗어남 — 일반 스크롤 유지
+    runAutoScroll(0);
+    return true;
+  }
+  return false;
 }
 
 function onWheel(event) {
   if (autoScrolling) {
     event.preventDefault();
-    if (event.deltaY < 0) cancelAutoScroll();
+    const opposing = (autoScrollDirection > 0 && event.deltaY < 0) || (autoScrollDirection < 0 && event.deltaY > 0);
+    if (opposing) cancelAutoScroll();
     return;
   }
   if (performance.now() < settleUntil) {
@@ -317,6 +366,8 @@ onUnmounted(() => {
 });
 </script>
 
+<!-- 래퍼 높이(SCROLL_DEPTH_VH)만큼 스크롤 가능한 여유 공간을 확보해야 안의
+     .idxHero가 fixed로 고정된 동안 실제로 스크롤이 발생해 progress가 움직인다 -->
 <template>
   <div ref="wrapRef" class="idxHeroPinWrap" :style="{ height: `${SCROLL_DEPTH_VH}vh` }">
     <section ref="heroRef" class="idxHero" :style="stageStyle" @pointermove="addImpact">
@@ -342,6 +393,7 @@ onUnmounted(() => {
         <span class="idxHeroFlash" :style="{ height: vals.flashHeight, opacity: vals.opFlash }"></span>
       </div>
 
+      <!-- 스크롤 임팩트 시 슬램되며 등장하는 "PIMM" 대형 글자 스테이지 -->
       <div class="idxHeroPimmStage" aria-hidden="true">
         <div class="idxHeroPimmLetters" :style="pimmLettersStyle">
           <span class="idxHeroLetter isP" :style="vals.l1">P</span>

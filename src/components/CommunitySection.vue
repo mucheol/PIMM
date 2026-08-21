@@ -1,3 +1,5 @@
+<!-- 커뮤니티 메뉴 4종(자유게시판/Q&A/수업사진/공지) 바로가기 카드 그리드.
+     v-reveal은 스크롤 시 순차적으로 나타나는 등장 애니메이션 디렉티브(directives/reveal.js 참고) -->
 <template>
   <section class="idxCommunity">
     <div class="contentWrap">
